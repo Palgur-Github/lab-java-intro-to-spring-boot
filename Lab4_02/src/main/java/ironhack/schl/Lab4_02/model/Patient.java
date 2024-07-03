@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -13,15 +15,14 @@ public class Patient {
     @Id
     private Integer patientId;
     private String name;
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
 
    @ManyToOne
     private Doctor doctor;
 
-    public Patient(Integer patientId, String name, String dateOfBirth){
+    public Patient(Integer patientId, String name){
         this.patientId = patientId;
         this.name = name;
-        this.dateOfBirth = dateOfBirth;
     }
 
     public Integer getId() {

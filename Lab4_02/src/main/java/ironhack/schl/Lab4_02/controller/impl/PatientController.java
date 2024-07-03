@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,20 +35,18 @@ public class PatientController {
         if (patientOptional.isEmpty()) return null;
         return patientOptional.get();
     }
-    /*
+
     @GetMapping("/patients/dateOfBirth/{startDate}/{endDate}")
-    public List<Patient> getPatientsByDateOfBirthRange(@PathVariable Date startDate, @PathVariable Date endDate) {
+    public List<Patient> getPatientsByDateOfBirthRange(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate) {
         return patientRepository.findAll().stream()
-                .filter(patient -> patient.getDateOfBirth().isAfter().isAfter(startDate) && patient.getDateOfBirth().isBefore(endDate))
+                .filter(patient -> patient.getDateOfBirth().isAfter(startDate) && patient.getDateOfBirth().isBefore(endDate))
                 .collect(Collectors.toList());
     }
-    */
 
     // Get patients by admitting doctor's department
 
     @GetMapping("/patients/admittingDoctor/department/{department}")
     public List<Patient> getPatientsAdmittedByDoctorDepartment(@PathVariable String department) {
-        Collectors Collectors = null;
         List<Integer> doctorIds = doctorRepository.findAll().stream()
                 .filter(doctor -> doctor.getDepartment().equals(department))
                 .map(Doctor::getEmployeeId)

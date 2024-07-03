@@ -22,7 +22,7 @@ class PatientRepositoryTest {
     @BeforeEach
     void setUp() {
 
-            patient = new Patient(1, "Jaime Jordan", "1984-03-02");
+            patient = new Patient(1, "Jaime Jordan");
             patientRepository.save(patient);
             System.out.println(patient);
 

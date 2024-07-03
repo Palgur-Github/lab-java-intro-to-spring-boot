@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -29,28 +30,22 @@ public class DoctorController {
         if (doctorOptional.isEmpty()) return null;
         return doctorOptional.get();
     }
+    // Get doctors by status
 
     @GetMapping("/doctors/status/{status}")
-    public List<Doctor> getDoctorsByStatus(
-            @RequestParam(defaultValue = "ON_CALL") Status status
-    ) {
-        this.status = status;
-        return doctorRepository.findAllByStatus(status);
+    public List<Doctor> getDoctorsByStatus(@PathVariable String status) {
+        return doctorRepository.findAll().stream()
+                .filter(doctor -> doctor.getStatus().equals(status))
+                .collect(Collectors.toList());
     }
 
-
-    @GetMapping("/employee/status/{status}")
-    @ResponseStatus(HttpStatus.OK)
-    public String getDoctorsByStatus() {
-        return "This is a response from a RESTful web service";
-    }
-
+    // Get doctors by department
 
     @GetMapping("/doctors/department/{department}")
-    public List<Doctor> getDoctorsByDepartment(
-            @RequestParam(defaultValue = "cardiology") String department
-    ) {
-        return doctorRepository.findAllByDepartment(department);
+    public List<Doctor> getDoctorsByDepartment(@PathVariable String department) {
+        return doctorRepository.findAll().stream()
+                .filter(doctor -> doctor.getDepartment().equals(department))
+                .collect(Collectors.toList());
     }
 
 }
